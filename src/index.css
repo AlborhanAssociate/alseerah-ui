@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* قيم النمط الفاتح: ثلاثيّات r g b كي تقبل الشفافيّة */
+  :root {
+    color-scheme: light;
+    --ink: 19 53 67; --ink-soft: 28 72 89; --ink-mid: 42 99 118; --ink-muted: 127 145 153;
+    --ink-50: 242 248 249; --ink-100: 228 239 242; --ink-200: 200 220 227; --ink-300: 156 193 205;
+    --ink-400: 107 163 181; --ink-500: 62 130 153; --ink-600: 42 99 118; --ink-700: 28 72 89;
+    --ink-800: 19 53 67; --ink-900: 13 40 51; --ink-950: 8 25 32;
+    --gold: 153 118 44; --gold-600: 176 140 58; --gold-700: 153 118 44; --sepia: 114 70 43;
+    --gold-pale: 244 236 217; --gold-100: 248 242 228; --gold-200: 240 230 204; --gold-800: 118 91 33;
+    --sand: 236 226 200; --sand-deep: 233 222 203;
+    --paper: 253 250 244; --paper-panel: 246 240 227; --paper-raised: 255 255 255; --paper-sunken: 241 233 216; --paper-warm: 251 248 241;
+    --line: 232 223 203; --line-soft: 241 234 217; --line-strong: 213 198 166;
+  }
+
+  /* قيم النمط الداكن: الورق يُظلم والحبر يُضيء، والذهب يبقى */
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --ink: 246 247 247; --ink-soft: 224 228 230; --ink-mid: 190 197 201; --ink-muted: 138 148 154;
+    --ink-50: 12 22 27; --ink-100: 21 36 44; --ink-200: 34 54 64; --ink-300: 60 88 102;
+    --ink-400: 96 128 142; --ink-500: 150 162 168; --ink-600: 190 199 203; --ink-700: 218 224 227;
+    --ink-800: 240 242 243; --ink-900: 247 248 249; --ink-950: 252 252 252;
+    /* الذهبيّ يُضيء درجةً في الداكن حتّى يبقى مقروءاً */
+    --gold: 214 188 128; --gold-600: 201 173 112; --gold-700: 214 188 128; --sepia: 212 164 130;
+    --gold-pale: 46 41 29; --gold-100: 54 47 31; --gold-200: 70 61 38; --gold-800: 226 204 150;
+    --sand: 35 52 61; --sand-deep: 42 61 71;
+    --paper: 16 27 33; --paper-panel: 21 36 44; --paper-raised: 24 42 51; --paper-sunken: 12 22 27; --paper-warm: 15 26 32;
+    --line: 34 54 64; --line-soft: 27 44 52; --line-strong: 47 70 82;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    margin: 0;
+  }
+
+  /* الأرقام اللاتينية داخل النصّ العربيّ تبقى مرتّبة ومعزولة */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.gold.DEFAULT");
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection { @apply bg-gold-light text-ink; }
+
+  /* شريط تمرير خفيف يناسب الورق الدافئ */
+  * { scrollbar-width: thin; scrollbar-color: theme("colors.line.DEFAULT") transparent; }
+  *::-webkit-scrollbar { width: 9px; height: 9px; }
+  *::-webkit-scrollbar-thumb {
+    background: theme("colors.line.DEFAULT");
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-track { background: transparent; }
+}
+
+@layer components {
+  /* تلاشي الرسائل تدريجيًّا قبل بلوغ صندوق الإنشاء */
+  .fade-to-composer {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent 100%);
+  }
+
+  /* التوهّج المحيطيّ — مشتقّ من لوحة الشعار */
+  .ambient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(600px 300px at 80% -8%, rgba(214, 188, 128, 0.34), transparent 66%),
+      radial-gradient(540px 290px at 16% 104%, rgba(42, 99, 118, 0.16), transparent 68%),
+      radial-gradient(420px 250px at 50% 48%, rgba(196, 151, 122, 0.12), transparent 72%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== ظهور متدرّج هادئ لبطاقات الصفحة الواحدة ===== */
+@layer components {
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .rise { animation: rise 560ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--rise-delay, 0ms); }
+  @media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+}
+
+/* ===== لمساتٌ سينمائيّة خفيفة لبطاقات الصفحة الواحدة ===== */
+@layer components {
+  /* حبيبات فيلم رقيقة فوق البطاقة */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+  }
+  /* خطّ ضوءٍ رفيع على الحافّة العليا فقط؛ لا تعتيمَ للأطراف كي يبقى أعلى البطاقة صافياً */
+  .vignette { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+  /* انزياحٌ بطيء جدّاً للصورة */
+  @keyframes drift {
+    from { transform: scale(1.04) translate3d(0, 0, 0); }
+    to   { transform: scale(1.1) translate3d(-1.2%, -1%, 0); }
+  }
+  .drift { animation: drift 22s ease-in-out infinite alternate; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) { .drift { animation: none; } }
+}
+
+/* حوافّ حجريّة خفيفة لبطاقات الاقتراحات: إزاحةٌ طفيفة بمرشّح SVG معرَّف في WelcomeState */
+@layer components {
+  .stone-depth { filter: url(#stone-depth); }
+  /* نسيج ورقٍ خفيف */
+  .paper-grain {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.28 0 0 0 0 0.17 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+    background-size: 200px 200px;
+  }
+}
+
+/* ===== طفوٌ هادئ لفقاعات الأسئلة في بطاقة الهويّة ===== */
+@layer components {
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-7px); }
+  }
+  .float-y {
+    animation: float-y var(--float-dur, 6s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0ms);
+  }
+  @media (prefers-reduced-motion: reduce) { .float-y { animation: none; } }
+}
+
+/* ===== تموّجاتٌ حول قرص البدء للفت الانتباه ===== */
+@layer components {
+  @keyframes ripple {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+  .ripple {
+    animation: ripple 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+    animation-delay: var(--ripple-delay, 0ms);
+  }
+  @media (prefers-reduced-motion: reduce) { .ripple { animation: none; } }
+}
