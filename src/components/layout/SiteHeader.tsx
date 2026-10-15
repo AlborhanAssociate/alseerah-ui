@@ -8,7 +8,6 @@ const NAV = [
   { label: "المزايا", href: "#features" },
   { label: "المصادر", href: "#sources" },
   { label: "الخطّ الزمنيّ", href: "#timeline" },
-  { label: "التجربة", href: "#demo" },
   { label: "المنهجيّة", href: "#methodology" },
 ] as const;
 
@@ -42,7 +41,7 @@ export function SiteHeader() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-[60] focus:rounded-md focus:bg-ink-800 focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-[60] focus:rounded-md focus:bg-plum-800 focus:px-4 focus:py-2 focus:text-sm focus:text-white"
       >
         تخطَّ إلى المحتوى
       </a>
@@ -92,7 +91,7 @@ export function SiteHeader() {
 
             <Link
               to="/chat"
-              className="inline-flex h-9 items-center rounded-lg bg-ink-800 px-4 text-[14px] font-medium text-white shadow-sm transition-colors hover:bg-ink-900 lg:px-5"
+              className="inline-flex h-9 items-center rounded-lg bg-plum-800 px-4 text-[14px] font-medium text-white shadow-sm ring-1 ring-white/10 transition-colors hover:bg-plum-900 lg:px-5"
             >
               جرّب المنصّة
             </Link>
@@ -143,7 +142,7 @@ export function SiteHeader() {
             <Link
               to="/chat"
               onClick={() => setMenuOpen(false)}
-              className="flex h-12 flex-1 items-center justify-center rounded-xl bg-ink-800 text-[15px] font-medium text-white shadow-sm"
+              className="flex h-12 flex-1 items-center justify-center rounded-xl bg-plum-800 text-[15px] font-medium text-white ring-1 ring-white/10 shadow-sm"
             >
               جرّب المنصّة
             </Link>

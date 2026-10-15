@@ -35,7 +35,7 @@ const PRINCIPLES = [
 
 export function Methodology() {
   return (
-    <section id="methodology" className="relative scroll-mt-24 py-10 sm:py-12 lg:py-14">
+    <section id="methodology" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium text-gold-700">

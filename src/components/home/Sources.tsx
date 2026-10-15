@@ -28,8 +28,8 @@ const SOURCES = [
   },
   {
     num: "٥",
-    title: "الكتب الستّة (البخاري، مسلم، ...)",
-    desc: "أصول الأحاديث النبويّة المتعلّقة بالسيرة",
+    title: "الكتب الستّة",
+    desc: "الصحيحان والسنن الأربع — أصول الأحاديث المتعلّقة بالسيرة",
   },
   {
     num: "٦",
@@ -40,11 +40,11 @@ const SOURCES = [
 
 export function Sources() {
   return (
-    <section id="sources" className="relative scroll-mt-24 overflow-hidden bg-paper-sunken py-10 sm:py-12 lg:py-14">
+    <section id="sources" className="relative scroll-mt-24 overflow-hidden bg-paper-sunken py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div className="grid gap-14 lg:grid-cols-5 lg:gap-20">
           {/* التمهيد */}
-          <div className="lg:col-span-2 lg:self-start lg:pt-2">
+          <div className="lg:col-span-2 lg:self-start">
             <p className="text-sm font-medium text-gold-700">
               النطاق
             </p>
@@ -70,32 +70,24 @@ export function Sources() {
           {/* المصادر */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3">
-              <BookOpen className="size-5 text-gold-700" strokeWidth={1.75} aria-hidden />
-              <h3 className="text-lg font-semibold text-ink-800">
-                المصادر المعتمدة
-              </h3>
+              <h3 className="text-lg font-semibold text-ink-800">المصادر المعتمدة</h3>
+              <span className="rounded-full bg-gold-pale px-2.5 py-0.5 text-[12px] font-medium text-gold-800">{SOURCES.length.toLocaleString("ar-EG")} مصادر</span>
               <span aria-hidden className="h-px flex-1 bg-gradient-to-l from-line-strong to-transparent" />
             </div>
 
-            <ol className="mt-7 grid gap-5 sm:grid-cols-2">
+            <ol className="mt-6 grid auto-rows-fr gap-4 sm:grid-cols-2">
               {SOURCES.map((src) => (
                 <li
                   key={src.num}
-                  className="group relative isolate overflow-hidden rounded-2xl bg-paper-raised p-5 pe-7 transition-transform duration-400 hover:-translate-y-1"
+                  className="group flex flex-col rounded-2xl bg-paper-raised p-6 ring-1 ring-ink/[0.05] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-md"
                 >
-
-                  {/* شعيرة ذهبية علوية تتمدّد عند المرور */}
-                  <span
+                  <BookOpen
                     aria-hidden
-                    className="absolute inset-x-6 top-0 h-0.5 w-10 rounded-full bg-gold-500/70 transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-24"
+                    className="size-6 text-gold transition-transform duration-300 group-hover:-translate-y-0.5"
+                    strokeWidth={1.5}
                   />
-
-                  <h4 className="relative mt-3 text-[17px] font-bold text-ink-800">
-                    {src.title}
-                  </h4>
-                  <p className="relative mt-2 text-sm leading-6.5 text-ink-500">
-                    {src.desc}
-                  </p>
+                  <h4 className="mt-4 text-[16px] font-bold leading-7 text-ink-800">{src.title}</h4>
+                  <p className="mt-1.5 text-[13.5px] leading-6 text-ink-500">{src.desc}</p>
                 </li>
               ))}
             </ol>

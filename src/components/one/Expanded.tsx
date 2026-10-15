@@ -65,7 +65,7 @@ export function Expanded({ id, title, fromRect, onClose, children }: Props) {
         aria-modal="true"
         aria-labelledby={`${id}-title`}
         style={{ ...style, transitionDuration: `${DURATION}ms` }}
-        className="absolute flex flex-col overflow-hidden rounded-[9px] bg-[#15181a]/85 text-[#ece2c8] shadow-lg ring-1 ring-white/15 backdrop-blur-2xl light:bg-paper/90 light:text-ink light:ring-ink/10 transition-[top,left,width,height,transform] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute flex flex-col overflow-hidden rounded-[9px] bg-[#1b1521]/85 text-[#f4e6dc] shadow-lg ring-1 ring-white/15 backdrop-blur-2xl light:bg-paper/90 light:text-ink light:ring-ink/10 transition-[top,left,width,height,transform] ease-[cubic-bezier(0.22,1,0.36,1)]"
       >
         <header className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4 light:border-ink/10">
           <h2 id={`${id}-title`} className="text-lg font-normal text-white light:text-ink">{title}</h2>
@@ -74,7 +74,7 @@ export function Expanded({ id, title, fromRect, onClose, children }: Props) {
             type="button"
             onClick={requestClose}
             aria-label="إغلاق"
-            className="grid size-9 place-items-center rounded-[9px] text-[#ece2c8]/70 transition-colors hover:bg-white/10 hover:text-white light:text-ink-600 light:hover:bg-[#ece2c8] light:hover:text-ink"
+            className="grid size-9 place-items-center rounded-[9px] text-[#f4e6dc]/70 transition-colors hover:bg-white/10 hover:text-white light:text-ink-600 light:hover:bg-[#f4e6dc] light:hover:text-ink"
           >
             <X className="size-[18px]" strokeWidth={1.75} aria-hidden />
           </button>

@@ -49,7 +49,7 @@ function StageNode({ className }: { className?: string }) {
 
 export function Timeline() {
   return (
-    <section id="timeline" className="relative scroll-mt-24 py-10 sm:py-12 lg:py-14">
+    <section id="timeline" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         {/* رأس القسم */}
         <div className="mx-auto max-w-2xl text-center">
@@ -68,12 +68,12 @@ export function Timeline() {
         <ol className="mt-12 hidden lg:grid lg:grid-cols-5 lg:gap-8">
           {STAGES.map((stage) => (
             <li key={stage.name} className="group relative">
-              {/* الخطّ الواصل عبر الأعمدة */}
+              {/* الخطّ الواصل: من مركز هذا العمود إلى مركز التالي عبر الفجوة (gap-8)، ولا خطّ بعد الأخير */}
               <span
                 aria-hidden
-                className="absolute start-0 end-0 top-2 h-px bg-gradient-to-l from-line-strong to-line-strong group-first:from-transparent group-last:to-transparent rtl:bg-gradient-to-r"
+                className="absolute start-1/2 top-2 h-px w-[calc(100%+2rem)] bg-line-strong group-last:hidden"
               />
-              <div className="relative flex flex-col items-start gap-5">
+              <div className="relative flex flex-col items-center gap-5 text-center">
                 <StageNode />
                 <div>
                   <p className="text-xs font-medium text-gold-700">

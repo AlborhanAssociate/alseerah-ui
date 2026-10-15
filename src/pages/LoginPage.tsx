@@ -140,16 +140,16 @@ export function LoginPage() {
       </div>
 
       {/* لوحة الهويّة: بطاقة مستديرة داخل الهامش. ألوانها ثابتةٌ في النمطَين لأنّها صورةٌ داكنة. الصورة مؤقّتة. */}
-      <aside className="relative hidden min-h-0 overflow-hidden rounded-3xl bg-[#141a1e] shadow-lg lg:flex lg:flex-col">
+      <aside className="relative hidden min-h-0 overflow-hidden rounded-3xl bg-[#19121e] shadow-lg lg:flex lg:flex-col">
         <img src={`${import.meta.env.BASE_URL}login-minaret.jpg`} alt="" className="absolute inset-0 size-full object-cover object-[50%_45%]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141a1e]/80 via-[#141a1e]/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#19121e]/80 via-[#19121e]/25 to-transparent" />
 
         <div className="relative flex flex-1 flex-col justify-end p-10 xl:p-12">
           <ul className="flex flex-wrap gap-2.5">
             {["+٢٠ مرجعًا من أمّهات الكتب", "إجابةٌ معزوّةٌ إلى كتابها وبابها", "٤ لغات"].map((t) => (
               <li
                 key={t}
-                className="rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] text-[#ece2c8] ring-1 ring-inset ring-white/15 backdrop-blur"
+                className="rounded-full bg-white/10 px-3.5 py-1.5 text-[12.5px] text-[#f4e6dc] ring-1 ring-inset ring-white/15 backdrop-blur"
               >
                 {t}
               </li>

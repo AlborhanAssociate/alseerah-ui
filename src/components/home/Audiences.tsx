@@ -32,7 +32,7 @@ const AUDIENCES = [
 
 export function Audiences() {
   return (
-    <section id="audiences" className="relative scroll-mt-24 py-10 sm:py-12 lg:py-14">
+    <section id="audiences" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium text-gold-700">
@@ -49,7 +49,7 @@ export function Audiences() {
               key={aud.title}
               className="group rounded-2xl bg-paper-raised p-5 transition-transform duration-400 hover:-translate-y-1"
             >
-              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-ink-100 text-ink-700 transition-colors duration-400 group-hover:bg-ink-800 group-hover:text-white">
+              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-ink-100 text-ink-700 transition-colors duration-400 group-hover:bg-plum-800 group-hover:text-white">
                 <aud.icon className="size-6" strokeWidth={1.6} aria-hidden />
               </span>
               <h3 className="mt-4 text-[17px] font-semibold text-ink-800">

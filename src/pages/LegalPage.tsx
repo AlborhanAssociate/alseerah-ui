@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { BrandFooter } from "@/components/layout/BrandFooter";
 
 const TITLES: Record<string, string> = {
   "/privacy": "سياسة الخصوصيّة",
@@ -12,7 +13,8 @@ export function LegalPage() {
   const title = TITLES[pathname] ?? "وثيقة";
 
   return (
-    <div className="min-h-svh bg-paper px-5 py-10 sm:px-10">
+    <div className="flex min-h-svh flex-col bg-paper">
+      <div className="flex-1 px-5 py-10 sm:px-10">
       <Link
         to="/"
         className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[12.5px] text-ink-muted transition-colors hover:bg-sand/45 hover:text-ink"
@@ -30,6 +32,8 @@ export function LegalPage() {
           لأيّ استفسار عن بياناتك أو شروط الخدمة.
         </p>
       </article>
+      </div>
+      <BrandFooter />
     </div>
   );
 }

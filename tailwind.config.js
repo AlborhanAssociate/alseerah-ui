@@ -6,8 +6,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* ── لوحة الشعار الرسميّة ──
-           #133543 حبر بترولي · #99762c ذهبي · #72462b بنّي · #ece2c8 كريمي
+        /* ── لوحة جمعيّة البرهان ──
+           #4a3856 بنفسجيّ (ink) · #db6e44 برتقاليّ (gold) · #a0482c صدئيّ (sepia) · #f4e6dc كريميّ (sand)
+           أسماء المفاتيح باقية كما هي حتّى لا تتغيّر المكوّنات
            الألوان التي تتبدّل بين النمطَين تُقرأ من متغيّرات CSS معرَّفة في index.css */
         ink: {
           DEFAULT: "rgb(var(--ink) / <alpha-value>)", soft: "rgb(var(--ink-soft) / <alpha-value>)",
@@ -20,16 +21,19 @@ export default {
           950: "rgb(var(--ink-950) / <alpha-value>)",
         },
         gold: {
-          DEFAULT: "rgb(var(--gold) / <alpha-value>)", light: "#d6bc80", pale: "rgb(var(--gold-pale) / <alpha-value>)",
+          DEFAULT: "rgb(var(--gold) / <alpha-value>)", light: "#eba584", pale: "rgb(var(--gold-pale) / <alpha-value>)",
           100: "rgb(var(--gold-100) / <alpha-value>)", 200: "rgb(var(--gold-200) / <alpha-value>)",
-          300: "#e5d3ab", 400: "#d6bc80",
-          500: "#c4a253", 600: "rgb(var(--gold-600) / <alpha-value>)", 700: "rgb(var(--gold-700) / <alpha-value>)", 800: "rgb(var(--gold-800) / <alpha-value>)", 900: "#5c4718",
+          300: "#f2c4ad", 400: "#eba584",
+          500: "#e3865f", 600: "rgb(var(--gold-600) / <alpha-value>)", 700: "rgb(var(--gold-700) / <alpha-value>)", 800: "rgb(var(--gold-800) / <alpha-value>)", 900: "#6e3016",
         },
         sepia: {
-          DEFAULT: "rgb(var(--sepia) / <alpha-value>)", light: "#c4977a",
-          200: "#eddacb", 300: "#dcbba5", 400: "#c4977a", 500: "#a8734e",
-          600: "#8c5a38", 700: "rgb(var(--sepia) / <alpha-value>)", 800: "#4e2f1c",
+          DEFAULT: "rgb(var(--sepia) / <alpha-value>)", light: "#d99a7f",
+          200: "#f3dcd1", 300: "#e8bba6", 400: "#d99a7f", 500: "#c4704d",
+          600: "#a8532f", 700: "rgb(var(--sepia) / <alpha-value>)", 800: "#5e2a17",
         },
+        /* ألوانٌ ثابتة لا تتبدّل مع النمط: للأسطح الداكنة دائماً (أزرار، لوحات، طبقات فوق الصور) */
+        plum: { 500: "#7a658d", 600: "#604d71", 700: "#544162", 800: "#4a3856", 900: "#382942", 950: "#1f1626" },
+        cream: { DEFAULT: "#f4e6dc" },
         sand: { DEFAULT: "rgb(var(--sand) / <alpha-value>)", deep: "rgb(var(--sand-deep) / <alpha-value>)" },
         paper: {
           DEFAULT: "rgb(var(--paper) / <alpha-value>)", panel: "rgb(var(--paper-panel) / <alpha-value>)",
@@ -52,17 +56,20 @@ export default {
         xs: "4px", sm: "8px", md: "12px", lg: "18px", xl: "26px", "2xl": "34px",
       },
       boxShadow: {
-        app:  "0 24px 64px rgba(19,53,67,.13)",
-        card: "0 10px 28px rgba(19,53,67,.09)",
-        chip: "0 1px 4px rgba(19,53,67,.06)",
-        btn:  "0 5px 16px rgba(19,53,67,.2)",
-        xs:   "0 1px 2px rgba(19,53,67,.05)",
-        sm:   "0 2px 8px rgba(19,53,67,.06)",
-        md:   "0 8px 24px rgba(19,53,67,.08)",
-        lg:   "0 18px 48px rgba(19,53,67,.10)",
-        gold: "0 8px 28px rgba(153,118,44,.18)",
+        app:  "0 24px 64px rgba(74,56,86,.13)",
+        card: "0 10px 28px rgba(74,56,86,.09)",
+        chip: "0 1px 4px rgba(74,56,86,.06)",
+        btn:  "0 5px 16px rgba(74,56,86,.2)",
+        xs:   "0 1px 2px rgba(74,56,86,.05)",
+        sm:   "0 2px 8px rgba(74,56,86,.06)",
+        md:   "0 8px 24px rgba(74,56,86,.08)",
+        lg:   "0 18px 48px rgba(74,56,86,.10)",
+        gold: "0 8px 28px rgba(219,110,68,.18)",
       },
       maxWidth: { answer: "64ch" },
+      /* درجاتٌ تستعملها المكوّنات وليست في مقياس Tailwind 3 الافتراضيّ */
+      spacing: { "4.5": "1.125rem", "6.5": "1.625rem", "13": "3.25rem" },
+      lineHeight: { "6.5": "1.625rem" },
     },
   },
   plugins: [

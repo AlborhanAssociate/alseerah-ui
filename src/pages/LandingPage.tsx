@@ -1,13 +1,17 @@
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { BrandFooter } from "@/components/layout/BrandFooter";
+import type { CardId } from "@/components/one/content";
 import { Hero } from "@/components/home/Hero";
 import { Features } from "@/components/home/Features";
 import { Sources } from "@/components/home/Sources";
 import { Timeline } from "@/components/home/Timeline";
-import { Demo } from "@/components/home/Demo";
 import { Audiences } from "@/components/home/Audiences";
 import { Methodology } from "@/components/home/Methodology";
 import { FinalCta } from "@/components/home/FinalCta";
+
+/* روابط «استكشِف» في التذييل تمرّر إلى القسم المقابل في هذه الصفحة */
+const SECTION: Record<CardId, string> = { features: "features", sources: "sources", timeline: "timeline", notdo: "methodology" };
+const explore = (id: CardId) => document.getElementById(SECTION[id])?.scrollIntoView({ behavior: "smooth" });
 
 export function LandingPage() {
   return (
@@ -18,12 +22,11 @@ export function LandingPage() {
         <Features />
         <Sources />
         <Timeline />
-        <Demo />
         <Audiences />
         <Methodology />
         <FinalCta />
       </main>
-      <SiteFooter />
+      <BrandFooter onExplore={explore} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { Card } from "@/components/one/Card";
 import { ThemeButton } from "@/components/ui/ThemeButton";
 import { Logo } from "@/components/brand/Logo";
+import { BrandFooter } from "@/components/layout/BrandFooter";
 import { BrandCard } from "@/components/one/BrandCard";
 import { Expanded } from "@/components/one/Expanded";
 import { CARDS, type CardId } from "@/components/one/content";
@@ -39,6 +39,14 @@ export function LandingOnePage() {
     history.replaceState(null, "", `#${id}`);
   }, []);
 
+  /* روابط «استكشِف» في التذييل: تمرير البطاقة إلى الشاشة ثمّ فتح نافذتها من موضعها */
+  const explore = useCallback((id: CardId) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ block: "center", behavior: "instant" });
+    openCard(id)(el);
+  }, [openCard]);
+
   const close = useCallback(() => {
     setOpen(null);
     history.replaceState(null, "", location.pathname);
@@ -59,7 +67,7 @@ export function LandingOnePage() {
   const meta = open ? CARDS.find((c) => c.id === open.id) : null;
 
   return (
-    <div className="relative isolate flex min-h-svh flex-col bg-[#0e1113] text-[#ece2c8] lg:h-svh lg:overflow-hidden light:bg-paper-warm light:text-ink">
+    <div className="relative isolate flex min-h-svh flex-col bg-[#140f19] text-[#f4e6dc] light:bg-paper-warm light:text-ink">
       <ThemeButton className="fixed start-5 top-5 z-40 size-10 bg-white/[0.08] text-white/85 ring-1 ring-white/15 backdrop-blur-md hover:bg-white/[0.14] light:bg-white/70 light:text-ink light:ring-ink/10 light:hover:bg-white" />
       {/* خلفيّة الشاشة: مدينةٌ قديمة بقبابٍ ونخيل، بتنعيمٍ خفيف تحت طبقةٍ داكنة شفّافة تُبقي المشهد مقروءاً خلف الزجاج */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -68,10 +76,10 @@ export function LandingOnePage() {
           alt=""
           className="size-full scale-[1.06] object-cover object-[50%_45%] blur-[10px] saturate-[0.85]"
         />
-        <div className="absolute inset-0 bg-[#0e1113]/[0.72] light:bg-paper-warm/[0.82]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0e1113]/65 via-transparent to-[#0e1113]/85 light:from-paper-warm/70 light:to-paper-warm/90" />
+        <div className="absolute inset-0 bg-[#140f19]/[0.72] light:bg-paper-warm/[0.82]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#140f19]/65 via-transparent to-[#140f19]/85 light:from-paper-warm/70 light:to-paper-warm/90" />
       </div>
-      <main id="main" className="flex min-h-0 flex-1 flex-col justify-center px-5 pb-6 pt-8 lg:px-8">
+      <main id="main" className="flex min-h-0 flex-1 flex-col justify-center px-5 pb-10 pt-8 lg:min-h-[calc(100svh-4rem)] lg:px-8">
         {/* العبارة والوصف */}
         <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center">
           <h1 className="[&_[data-wordmark]_path]:fill-white light:[&_[data-wordmark]_path]:fill-ink">
@@ -92,19 +100,8 @@ export function LandingOnePage() {
         </div>
       </main>
 
-      <footer className="flex min-h-12 shrink-0 flex-wrap items-center justify-between gap-x-6 gap-y-2 px-5 py-2 text-[12px] text-white/35 light:text-ink-500 lg:px-8">
-        {/* شعار الجمعيّة: الأبيض على الداكن، والملوّن على الفاتح */}
-        <a href="https://alborhan.sa" target="_blank" rel="noreferrer" className="flex items-center gap-3 transition-opacity hover:opacity-85">
-          <img src={`${import.meta.env.BASE_URL}alborhan-white.png`} alt="" className="h-8 w-auto light:hidden" />
-          <img src={`${import.meta.env.BASE_URL}alborhan.svg`} alt="" className="hidden h-8 w-auto light:block" />
-          <span className="text-[12.5px] text-white/60 light:text-ink-600">إحدى مبادرات جمعية البرهان لخدمة السُنّة والقرآن</span>
-        </a>
-        <nav aria-label="روابط ختاميّة" className="flex items-center gap-4">
-          <Link to="/terms" className="transition-colors hover:text-[#ece2c8] light:hover:text-ink">شروط الاستخدام</Link>
-          <Link to="/privacy" className="transition-colors hover:text-[#ece2c8] light:hover:text-ink">سياسة الخصوصيّة</Link>
-          <span>© <span className="tabular">2026</span></span>
-        </nav>
-      </footer>
+      <BrandFooter onExplore={explore} />
+
 
       {open && Window && meta && (
         <Expanded id={open.id} title={meta.window} fromRect={open.rect} onClose={close}>

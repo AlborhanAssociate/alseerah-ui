@@ -4,10 +4,10 @@ import { currentUser } from "../../data/user";
 /** بطاقات البدء — أربعة مداخل إلى السيرة، لكلٍّ لونه من لوحة الشعار */
 /** أربع درجاتٍ فاتحة من الرمليّ الذهبيّ نفسه، من الأفتح إلى الأدفأ، بحافّةٍ أدكن قليلاً */
 const GOLD = [
-  "from-[#fcf8ee] to-[#fefcf6] ring-[#e2d4b3] hover:from-[#f9f3e3] text-[#8a6a26] dark:from-[#2a2618] dark:to-[#1f1d15] dark:ring-[#4a4128] dark:hover:from-[#332e1d] dark:text-gold-light",
-  "from-[#faf4e6] to-[#fdfaf2] ring-[#dfcfaa] hover:from-[#f6eed9] text-[#8a6a26] dark:from-[#2d2919] dark:to-[#211f16] dark:ring-[#4d4429] dark:hover:from-[#36311e] dark:text-gold-light",
-  "from-[#f8f0dd] to-[#fcf8ed] ring-[#dbc9a0] hover:from-[#f3e8cf] text-[#8a6a26] dark:from-[#302b1a] dark:to-[#232017] dark:ring-[#50462a] dark:hover:from-[#39331f] dark:text-gold-light",
-  "from-[#f6ecd4] to-[#fbf6e8] ring-[#d7c396] hover:from-[#f0e3c5] text-[#8a6a26] dark:from-[#332e1b] dark:to-[#252218] dark:ring-[#53482b] dark:hover:from-[#3c3620] dark:text-gold-light",
+  "from-[#fcf3ee] to-[#fef9f6] ring-[#e2c3b3] hover:from-[#f9eae3] text-[#b0532f] dark:from-[#2a1e18] dark:to-[#1f1815] dark:ring-[#4a3328] dark:hover:from-[#33241d] dark:text-gold-light",
+  "from-[#faede6] to-[#fdf6f2] ring-[#dfbcaa] hover:from-[#f6e3d9] text-[#b0532f] dark:from-[#2d2019] dark:to-[#211a16] dark:ring-[#4d3529] dark:hover:from-[#36261e] dark:text-gold-light",
+  "from-[#f8e6dd] to-[#fcf2ed] ring-[#dbb4a0] hover:from-[#f3dbcf] text-[#b0532f] dark:from-[#30211a] dark:to-[#231b17] dark:ring-[#50372a] dark:hover:from-[#39281f] dark:text-gold-light",
+  "from-[#f6dfd4] to-[#fbeee8] ring-[#d7ac96] hover:from-[#f0d3c5] text-[#b0532f] dark:from-[#33231b] dark:to-[#251c18] dark:ring-[#53382b] dark:hover:from-[#3c2920] dark:text-gold-light",
 ];
 
 const STARTERS = [
@@ -84,7 +84,7 @@ export function WelcomeState({ onPick }: { onPick: (q: string) => void }) {
             <span
               aria-hidden
               style={{ filter: `url(#stone-edge-${(i % 4) + 1})` }}
-              className={`absolute inset-0 -z-10 overflow-hidden rounded-lg bg-gradient-to-br ring-1 shadow-[inset_0_0_0_1px_rgba(114,70,43,0.28),inset_0_0_36px_rgba(114,70,43,0.10),2px_3px_8px_rgba(114,70,43,0.12)] transition-shadow duration-200 group-hover:shadow-[inset_0_0_0_1px_rgba(114,70,43,0.38),inset_0_0_36px_rgba(114,70,43,0.12),3px_5px_12px_rgba(114,70,43,0.16)] ${tint}`}
+              className={`absolute inset-0 -z-10 overflow-hidden rounded-lg bg-gradient-to-br ring-1 shadow-[inset_0_0_0_1px_rgba(160,72,44,0.28),inset_0_0_36px_rgba(160,72,44,0.10),2px_3px_8px_rgba(160,72,44,0.12)] transition-shadow duration-200 group-hover:shadow-[inset_0_0_0_1px_rgba(160,72,44,0.38),inset_0_0_36px_rgba(160,72,44,0.12),3px_5px_12px_rgba(160,72,44,0.16)] ${tint}`}
             >
               <span className="paper-grain absolute inset-0 opacity-[0.26] mix-blend-multiply" />
             </span>

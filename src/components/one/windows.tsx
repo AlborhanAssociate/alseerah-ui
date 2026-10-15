@@ -12,7 +12,7 @@ function Prose({ children }: { children: ReactNode }) {
 }
 
 function Lead({ children }: { children: ReactNode }) {
-  return <p className="text-pretty text-[15.5px] leading-8 text-[#ece2c8]/85 light:text-ink-700">{children}</p>;
+  return <p className="text-pretty text-[15.5px] leading-8 text-[#f4e6dc]/85 light:text-ink-700">{children}</p>;
 }
 
 function Entries({ children }: { children: ReactNode }) {
@@ -29,7 +29,7 @@ function Entry({ n, title, kicker, children }: { n?: string; title: string; kick
           {kicker && <span className="ms-2 text-[12.5px] text-gold-light light:text-gold">{kicker}</span>}
         </span>
       </dt>
-      <dd className="text-pretty text-[14.5px] leading-8 text-[#ece2c8]/75 light:text-ink-600 sm:col-start-2">{children}</dd>
+      <dd className="text-pretty text-[14.5px] leading-8 text-[#f4e6dc]/75 light:text-ink-600 sm:col-start-2">{children}</dd>
     </div>
   );
 }
@@ -79,7 +79,7 @@ export function SourcesWindow() {
       <Heading>وكلّ جوابٍ له سند</Heading>
       <blockquote className="mt-3 border-s-2 border-gold-light/60 light:border-gold/60 ps-4 text-[16px] leading-8 text-white light:text-ink">
         {SOURCES.hadith}
-        <footer className="mt-1.5 text-[12.5px] text-[#ece2c8]/60 light:text-ink-500">
+        <footer className="mt-1.5 text-[12.5px] text-[#f4e6dc]/60 light:text-ink-500">
           {SOURCES.tags[0]} · {SOURCES.tags[1]} · <span className="text-gold-light light:text-gold">{SOURCES.tags[2]}</span>
         </footer>
       </blockquote>
@@ -87,7 +87,7 @@ export function SourcesWindow() {
         {SOURCES.points.map((p, i) => (
           <div key={p} className="flex gap-4 py-3.5 first:pt-5 last:pb-0">
             <span className="tabular w-[3.5rem] shrink-0 text-[1rem] leading-8 text-gold-light/80 light:text-gold">{AR[i]}</span>
-            <p className="text-[14.5px] leading-8 text-[#ece2c8]/75 light:text-ink-600">{p}</p>
+            <p className="text-[14.5px] leading-8 text-[#f4e6dc]/75 light:text-ink-600">{p}</p>
           </div>
         ))}
       </Entries>
@@ -106,7 +106,7 @@ export function NotDoWindow() {
       </Entries>
       <a
         href="mailto:info@alborhan.sa"
-        className="mt-10 inline-flex items-center gap-2 text-[14.5px] text-[#ece2c8]/80 underline decoration-white/25 light:text-ink-700 light:decoration-ink/25 underline-offset-[6px] transition-colors hover:text-white light:hover:text-ink"
+        className="mt-10 inline-flex items-center gap-2 text-[14.5px] text-[#f4e6dc]/80 underline decoration-white/25 light:text-ink-700 light:decoration-ink/25 underline-offset-[6px] transition-colors hover:text-white light:hover:text-ink"
       >
         <Mail className="size-4" strokeWidth={1.75} aria-hidden />
         تواصَل مع الفريق العلميّ
