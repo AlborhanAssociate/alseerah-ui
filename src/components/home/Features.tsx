@@ -111,10 +111,8 @@ function FeatureCard({ f }: { f: Feature }) {
       className={cn(
         /* على الجوّال: بطاقةٌ بعرض ٨٥٪ في شريطٍ أفقيّ يُسحب، فتطلّ التالية من الحافّة. ارتفاعها بقدر محتواها (٢٠rem على الأقلّ)،
            والشريط يمدّ البطاقات كلّها إلى ارتفاع أطولها فتتساوى دون قصّ */
-        "group relative isolate flex min-h-[20rem] w-[85%] shrink-0 snap-center flex-col justify-end overflow-hidden rounded-[10px] p-5 transition-[transform,box-shadow] duration-500 hover:-translate-y-0.5 hover:shadow-lg sm:h-auto sm:min-h-[14rem] sm:w-auto lg:p-6",
-        photo
-          ? "bg-plum-950 text-cream ring-1 ring-ink/10"
-          : "bg-white/60 text-ink ring-1 ring-ink/[0.07] backdrop-blur-2xl backdrop-saturate-150 dark:bg-white/[0.06] dark:ring-white/10",
+        "neu-press group relative isolate flex min-h-[20rem] w-[85%] shrink-0 snap-center flex-col justify-end overflow-hidden rounded-[20px] p-5 sm:h-auto sm:min-h-[14rem] sm:w-auto lg:p-6",
+        photo ? "neu-shadow bg-plum-950 text-cream" : "neu-raised text-ink",
         f.span,
       )}
     >
@@ -186,7 +184,7 @@ export function Features() {
   return (
     <section id="features" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="reveal mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-[1.6rem] font-bold leading-[1.35] text-ink-800 lg:text-[2rem]">
             رفيقٌ علميٌّ بين يديك
           </h2>
@@ -196,7 +194,8 @@ export function Features() {
         <div
           ref={rail}
           onScroll={onScroll}
-          className="-mx-5 mt-10 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-2.5 sm:overflow-visible sm:px-0 lg:grid-cols-12 lg:grid-rows-[15rem_15rem]"
+          style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
+          className="reveal -mx-5 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:mt-10 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:py-0 lg:grid-cols-12 lg:grid-rows-[15rem_15rem]"
         >
           {FEATURES.map((f) => (
             <FeatureCard key={f.title} f={f} />

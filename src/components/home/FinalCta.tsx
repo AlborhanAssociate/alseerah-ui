@@ -9,7 +9,7 @@ import { ArrowLeft } from "lucide-react";
 export function FinalCta() {
   return (
     <section className="relative px-5 pb-20 pt-20 text-center sm:pb-28 sm:pt-24 lg:px-8 lg:pb-32 lg:pt-28">
-      <div className="mx-auto flex max-w-3xl flex-col items-center">
+      <div className="reveal mx-auto flex max-w-3xl flex-col items-center">
         <h2 className="max-w-2xl text-balance text-[1.6rem] font-bold leading-[1.35] text-white lg:text-[2.25rem]">
           ابدأ رحلتَك في السيرة العطرة اليوم
         </h2>
@@ -27,7 +27,7 @@ export function FinalCta() {
           </Link>
           <a
             href="mailto:info@alborhan.sa"
-            className="inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-[15px] font-medium text-white/90 ring-1 ring-inset ring-white/25 backdrop-blur-md transition-colors duration-300 hover:bg-white/[0.06] hover:text-white hover:ring-gold-400/60 sm:w-auto"
+            className="neu-raised-sm neu-press inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-[15px] font-medium text-white/90 hover:text-white sm:w-auto"
           >
             تواصَل مع الفريق العلميّ
           </a>

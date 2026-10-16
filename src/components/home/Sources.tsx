@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { cn } from "@/lib/cn";
+import { trackSpotlight } from "@/lib/spotlight";
 
 /**
  * قسم النطاق — شعار السيرة ai في الوسط، والمصادر الستّة حوله بطاقاتٌ تخرج منها صور مجلّداتها.
@@ -42,11 +43,11 @@ function BookNote({ i, active, onEnter, onLeave, nodeRef, outer = "start" }: {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       className={cn(
-        /* زجاجٌ داكن: بياضٌ شفيف جدّاً يموّه الأضواء خلفه، وحدٌّ أبيض رفيع، بلا ظلالٍ ولا توهّج */
-        "group relative flex items-center rounded-[14px] border bg-white/[0.06] backdrop-blur-xl backdrop-saturate-150 transition-[border-color,background-color] duration-300",
+        /* بروزٌ ناعم بلون الشريط نفسه؛ يتّقد حدُّها البرتقاليّ حين تُختار */
+        "neu-raised group relative flex items-center rounded-[16px] border transition-[border-color,box-shadow] duration-300",
         "h-[4.5rem] max-md:h-auto max-md:flex-col max-md:justify-end max-md:px-2 max-md:pb-3 max-md:pt-[4.25rem] max-md:text-center",
         outer === "start" ? "pe-4 ps-[6.75rem]" : "pe-[6.75rem] ps-4 md:justify-end",
-        active ? "border-gold-600/60 bg-white/[0.1]" : "border-white/[0.12]",
+        active ? "border-gold-600/60" : "border-transparent",
       )}
     >
       {/* المجلّدات: قاعدتها داخل البطاقة ورأسها خارج حافّتها */}
@@ -71,6 +72,19 @@ function BookNote({ i, active, onEnter, onLeave, nodeRef, outer = "start" }: {
   );
 }
 
+/* مسارٌ متعامد من نقاطٍ متتالية بزوايا مستديرة (نصف قطرها r أو أقلّ إن ضاق المقطع) */
+function elbow(pts: [number, number][], r = 10) {
+  let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  for (let k = 1; k < pts.length - 1; k++) {
+    const [px, py] = pts[k - 1], [x, y] = pts[k], [nx, ny] = pts[k + 1];
+    const a = Math.min(r, Math.hypot(x - px, y - py) / 2, Math.hypot(nx - x, ny - y) / 2);
+    const ux = Math.sign(x - px), uy = Math.sign(y - py), vx = Math.sign(nx - x), vy = Math.sign(ny - y);
+    d += ` L ${x - ux * a} ${y - uy * a} Q ${x} ${y} ${x + vx * a} ${y + vy * a}`;
+  }
+  const [lx, ly] = pts[pts.length - 1];
+  return `${d} L ${lx} ${ly}`;
+}
+
 export function Sources() {
   const [hover, setHover] = useState<number | null>(null);
   const [pulses, setPulses] = useState<Pulse[]>([]);
@@ -80,6 +94,8 @@ export function Sources() {
   /* بطاقات الجوّال (شبكة ٣×٢ تحت الشعار) */
   const mnotes = useRef<(HTMLLIElement | null)[]>([]);
   const [paths, setPaths] = useState<string[]>([]);
+  /* نقاط التقاء الخطوط برؤوس الكتب على الجوّال */
+  const [ends, setEnds] = useState<[number, number][]>([]);
 
   /* إشاراتٌ عصبيّة: تنطلق في لحظاتٍ عشوائيّة على مساراتٍ عشوائيّة، بعضها إلى الشعار وبعضها منه،
      فتجري معاً متوازيةً لا بالدور. لكلّ إشارةٍ مدّةٌ مختلفة، وتُحذف حين تبلغ طرفها. */
@@ -110,31 +126,28 @@ export function Sources() {
     if (!desktop) {
       const cards = mnotes.current.map((el) => el?.getBoundingClientRect());
       if (cards.some((x) => !x)) { setPaths([]); return; }
-      const tops = mnotes.current.map((el) => (el!.querySelector("img")?.getBoundingClientRect().top ?? 0) - b.top - 4);
-      const sx = c.left + c.width / 2 - b.left;
-      const sy = c.bottom - b.top + 6;
       const R = cards as DOMRect[];
-      /* فجوتا الأعمدة (الترتيب من اليمين: ٠ ثمّ ١ ثمّ ٢) */
+      const tops = mnotes.current.map((el) => (el!.querySelector("img")?.getBoundingClientRect().top ?? 0) - b.top);
+      const sx = c.left + c.width / 2 - b.left;
+      const sy = c.bottom - b.top + 4;
+      /* خطّ التوزيع الأوّل في منتصف المسافة بين الشعار ورؤوس الصفّ الأوّل، والثاني بين الصفّين */
+      const bus1 = (sy + Math.min(tops[0], tops[1], tops[2])) / 2;
+      const bus2 = (R[0].bottom - b.top + Math.min(tops[3], tops[4], tops[5])) / 2;
+      /* فجوتا الأعمدة (الترتيب من اليمين: ٠ ثمّ ١ ثمّ ٢)؛ ينزل فيهما مسار الصفّ الثاني */
       const gapR = (R[0].left + R[1].right) / 2 - b.left;
       const gapL = (R[1].left + R[2].right) / 2 - b.left;
+      const cx = (i: number) => R[i].left + R[i].width / 2 - b.left;
       setPaths(
-        R.map((n, i) => {
-          const tx = n.left + n.width / 2 - b.left;
-          const ty = tops[i];
-          if (i < 3) {
-            const h = (ty - sy) / 2;
-            return `M ${sx} ${sy} C ${sx} ${sy + h}, ${tx} ${ty - h}, ${tx} ${ty}`;
-          }
-          const gx = i === 5 ? gapL : i === 4 ? gapR + 3 : gapR - 3;
-          const y1 = tops[0] - 6;
-          const y2 = R[0].bottom - b.top + 10;
-          const h1 = (y1 - sy) / 2;
-          const h2 = (ty - y2) / 2;
-          return `M ${sx} ${sy} C ${sx} ${sy + h1}, ${gx} ${y1 - h1}, ${gx} ${y1} L ${gx} ${y2} C ${gx} ${y2 + h2}, ${tx} ${ty - h2}, ${tx} ${ty}`;
+        R.map((_, i) => {
+          if (i < 3) return elbow([[sx, sy], [sx, bus1], [cx(i), bus1], [cx(i), tops[i]]]);
+          const gx = i === 3 ? gapR + 2 : i === 4 ? gapR - 2 : gapL;
+          return elbow([[sx, sy], [sx, bus1], [gx, bus1], [gx, bus2], [cx(i), bus2], [cx(i), tops[i]]]);
         }),
       );
+      setEnds(R.map((_, i) => [cx(i), tops[i]]));
       return;
     }
+    setEnds([]);
     const cy = c.top + c.height / 2 - b.top;
     setPaths(
       notes.current.map((el) => {
@@ -166,7 +179,7 @@ export function Sources() {
 
   return (
     /* شريطٌ داكن ثابت اللون في النمطين يكسر بياض الصفحة؛ وخلف الشبكة أضواءٌ ناعمة تُظهر زجاج البطاقات */
-    <section id="sources" className="relative isolate scroll-mt-24 overflow-hidden bg-plum-950 py-16 text-white sm:py-20 lg:py-24">
+    <section id="sources" onMouseMove={trackSpotlight} className="neu-band group/spot relative isolate scroll-mt-24 overflow-hidden bg-plum-950 py-16 text-white sm:py-20 lg:py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <span className="absolute left-1/2 top-[58%] size-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold-600/25 blur-[110px]" />
         <span className="absolute left-[8%] top-[30%] size-80 rounded-full bg-plum-500/45 blur-[100px]" />
@@ -176,8 +189,10 @@ export function Sources() {
         <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-white/15 to-transparent" />
         <span className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-l from-transparent via-white/10 to-transparent" />
       </div>
+      {/* ضوءٌ ناعم يتبع المؤشّر فوق الشريط الداكن */}
+      <span aria-hidden className="spotlight pointer-events-none absolute inset-0 -z-[5] opacity-0 transition-opacity duration-500 group-hover/spot:opacity-100" />
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="reveal mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-[1.6rem] font-bold leading-[1.35] text-white lg:text-[2rem]">
             بنيةٌ معرفيّةٌ مبنيّةٌ على أمّات الكتب
           </h2>
@@ -198,6 +213,9 @@ export function Sources() {
                 strokeWidth={1}
                 className={cn("transition-[color] duration-300", hover === i ? "text-gold-600/70" : "text-white/[0.14]")}
               />
+            ))}
+            {ends.map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r={2.5} className={cn("transition-[fill] duration-300", hover === i ? "fill-gold-600" : "fill-white/40")} />
             ))}
             <g>
               {pulses.map((p) => paths[p.i] && (
@@ -229,7 +247,7 @@ export function Sources() {
           <ol className="hidden flex-col gap-12 pt-6 md:flex">{[3, 4, 5].map(note)}</ol>
 
           {/* الجوّال: المصادر تحت الشعار */}
-          <ol className="grid grid-cols-3 gap-x-3 gap-y-12 pt-8 md:hidden">
+          <ol className="grid grid-cols-3 gap-x-4 gap-y-14 pt-12 md:hidden">
             {SOURCES.map((s, i) => (
               <BookNote key={s.key} i={i} active={hover === i} onEnter={hoverOn(i)} onLeave={hoverOff} nodeRef={(el) => { mnotes.current[i] = el; }} />
             ))}

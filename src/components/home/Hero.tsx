@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { CSSProperties } from "react";
-import { ArrowLeft, MessageCircleQuestion } from "lucide-react";
+import { ArrowLeft, Check, ChevronDown, MessageCircleQuestion } from "lucide-react";
 import { setPendingQuestion } from "@/lib/pendingQuestion";
 
 /**
@@ -11,7 +11,7 @@ import { setPendingQuestion } from "@/lib/pendingQuestion";
  */
 
 
-const TRUST = ["إجابةٌ معزوّةٌ إلى صفحتها", "من أمّهات كتب السيرة والحديث", "بالعربيّة ولغاتٍ أخرى"];
+const TRUST = ["إجابةٌ معزوّةٌ إلى صفحتها", "من أمّهات كتب السيرة", "بالعربيّة ولغاتٍ أخرى"];
 
 /* تلاشي صورة الرجل: من الأعلى طويلٌ متدرّج بمنحنى ناعم (درجاتٌ متقاربة تحاكي ease-in-out)، ثمّ جسمٌ ممتلئ، ثمّ تلاشٍ طويلٌ بالمنحنى نفسه في الأسفل */
 const HERO_MASK =
@@ -59,6 +59,8 @@ export function Hero() {
   /* نقرة بطاقة: يُكتب سؤالها في الحقل سريعاً، ثمّ تُفتح المحادثة به */
   function typeThenGo(q: string) {
     if (typing) return;
+    /* الحقل مخفيٌّ على الجوّال، فتنتقل البطاقة إلى المحادثة مباشرةً */
+    if (!input.current?.offsetParent) return go(q);
     setTyping(true);
     setPreview(null);
     input.current?.focus();
@@ -88,12 +90,12 @@ export function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(rgba(74,56,86,0.10)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,#000_15%,transparent_70%)] dark:bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)]" />
       </div>
 
-      <div className="mx-auto my-auto grid w-full max-w-6xl items-center gap-4 px-5 pb-28 pt-[6.375rem] sm:gap-12 lg:grid-cols-12 lg:gap-8 lg:px-8">
+      <div className="mx-auto my-auto grid w-full max-w-6xl items-center gap-9 px-5 pb-[5.5rem] pt-[7.875rem] sm:gap-12 sm:pb-28 sm:pt-[6.375rem] lg:grid-cols-12 lg:gap-8 lg:px-8">
         {/* النصّ والحقل: العنوان وحده يحدّد عرض الكتلة (w-fit)، وكلّ ما سواه w-0 min-w-full فيأخذ عرضه بالضبط دون أن يوسّعه،
             فتتحاذى الأطراف من الجهتين */}
         <div className="min-w-0 lg:col-span-6">
           <div className="grid w-full justify-items-center text-center sm:justify-items-start sm:text-start lg:w-fit lg:max-w-full">
-          <h1 style={rise(0)} className="rise text-balance text-[1.85rem] font-bold leading-[1.2] text-ink-800 sm:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem]">
+          <h1 style={rise(0)} className="rise text-balance text-[calc((100vw-2.5rem)*0.1085)] font-bold leading-[1.2] max-sm:whitespace-nowrap text-ink-800 sm:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem]">
             السيرةُ النبويّةُ بين يديك
             <span className="mt-1 block text-gold-700">بإسنادٍ وعزوٍ إلى المصدر</span>
           </h1>
@@ -103,7 +105,7 @@ export function Hero() {
           </p>
 
           {/* فاصلٌ شعريّ يتلاشى نحو الطرف، يُفسح بين الوصف والحقل */}
-          <span aria-hidden style={rise(140)} className="rise mt-9 block h-px w-0 min-w-full bg-gradient-to-l from-transparent via-ink/15 to-transparent sm:from-ink/15 sm:via-ink/[0.08] sm:to-transparent dark:via-white/20 sm:dark:from-white/20 sm:dark:via-white/10" />
+          <span aria-hidden style={rise(140)} className="rise mt-9 hidden h-px w-0 min-w-full sm:block bg-gradient-to-l from-transparent via-ink/15 to-transparent sm:from-ink/15 sm:via-ink/[0.08] sm:to-transparent dark:via-white/20 sm:dark:from-white/20 sm:dark:via-white/10" />
 
           <form
             onSubmit={(e) => {
@@ -111,7 +113,7 @@ export function Hero() {
               go(question);
             }}
             style={rise(180)}
-            className="rise relative mt-9 w-0 min-w-full"
+            className="rise relative mt-9 hidden w-0 min-w-full sm:block"
           >
             <label htmlFor="hero-question" className="sr-only">
               اسأل عن السيرة النبويّة
@@ -129,23 +131,41 @@ export function Hero() {
               }}
               placeholder={placeholder}
               autoComplete="off"
-              className="h-14 w-full min-w-0 rounded-full bg-white/80 pe-16 ps-6 text-[15px] text-ink shadow-[0_10px_30px_rgba(74,56,86,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-ink/[0.08] outline-none backdrop-blur-md transition-shadow placeholder:text-ink-muted focus:ring-2 focus:ring-gold/45 dark:bg-white/[0.06] dark:shadow-none"
+              className="neu-inset h-14 w-full min-w-0 rounded-full pe-16 ps-6 text-[15px] text-ink outline-none transition-shadow placeholder:text-ink-muted focus:ring-2 focus:ring-gold/35"
             />
             {/* زرّ الإرسال: دائرةٌ بسهمٍ باتّجاه القراءة، كسهم الإرسال في المحادثة */}
             <button
               type="submit"
               aria-label="ابدأ المحادثة"
-              className="group absolute inset-y-2 end-2 grid aspect-square place-items-center rounded-full bg-plum-800 text-white shadow-[0_6px_16px_-4px_rgba(74,56,86,0.5)] ring-1 ring-white/10 transition-colors hover:bg-plum-900"
+              className="neu-raised-sm neu-press group absolute inset-y-2 end-2 grid aspect-square place-items-center rounded-full text-plum-800 dark:text-white"
             >
               <ArrowLeft className="size-5 transition-transform duration-300 group-hover:-translate-x-0.5" strokeWidth={2} aria-hidden />
             </button>
           </form>
 
-          {/* سطرٌ هادئ تحت الحقل: ثلاث ميزاتٍ موجزة تفصلها نقاطٌ صغيرة */}
-          <ul style={rise(240)} className="rise mt-6 flex w-0 min-w-full flex-wrap items-center justify-center gap-x-4 gap-y-1.5 px-1 text-[13px] text-ink-500 sm:justify-start sm:gap-x-3">
-            {TRUST.map((x, i) => (
-              <li key={x} className="flex items-center gap-3">
-                {i > 0 && <span aria-hidden className="hidden size-1 rounded-full bg-ink/25 sm:block dark:bg-white/30" />}
+          {/* أزرار الدعوة: رئيسيٌّ برتقاليّ مصقول بلمعةٍ علويّة خفيفة، وثانويٌّ نصّيّ هادئ بسهمٍ نازل إلى المزايا */}
+          <div style={rise(210)} className="rise mt-7 flex w-0 min-w-full flex-wrap items-center justify-center gap-x-3 gap-y-3 sm:gap-x-4 sm:justify-start">
+            <Link
+              to="/chat"
+              className="group relative inline-flex h-11 items-center gap-2 overflow-hidden rounded-full bg-gradient-to-b from-gold-500 to-gold-600 px-5 text-[14px] sm:px-6 sm:text-[14.5px] font-medium text-white shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_6px_16px_-8px_rgba(219,110,68,0.7)] ring-1 ring-gold-700/30 transition-[filter,transform] duration-300 hover:brightness-105 active:scale-[0.98]"
+            >
+              ابدأ المحادثة مجّاناً
+              <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={2} aria-hidden />
+            </Link>
+            <a
+              href="#features"
+              className="neu-raised-sm neu-press group hidden h-11 items-center gap-1.5 rounded-full px-4 sm:inline-flex text-[14px] sm:px-5 sm:text-[14.5px] font-medium text-ink-700 hover:text-ink-800 dark:text-white/75 dark:hover:text-white"
+            >
+              اكتشف المزايا
+              <ChevronDown className="size-4 transition-transform duration-300 group-hover:translate-y-0.5" strokeWidth={1.75} aria-hidden />
+            </a>
+          </div>
+
+          {/* سطرٌ هادئ تحت الأزرار: ثلاث ميزاتٍ موجزة، لكلٍّ علامةٌ صغيرة، على سطرٍ واحد */}
+          <ul style={rise(240)} className="rise mt-7 hidden w-0 min-w-full flex-wrap items-center gap-x-3.5 gap-y-2 pt-1 text-[12.5px] text-ink-500 sm:flex dark:border-white/10">
+            {TRUST.map((x) => (
+              <li key={x} className="flex items-center gap-1.5 whitespace-nowrap">
+                <Check className="size-3.5 shrink-0 text-gold-600" strokeWidth={2.25} aria-hidden />
                 {x}
               </li>
             ))}
@@ -154,8 +174,8 @@ export function Hero() {
         </div>
 
         {/* التركيب البصريّ: رجلٌ يسأل من هاتفه وحوله أسئلةٌ عائمة؛ على الجوّال صورةٌ صغيرة فوق النصّ وبطاقاتٌ أصغر */}
-        <div style={rise(200)} className="rise relative max-sm:order-first lg:col-span-6">
-          <div className="relative mx-auto aspect-[1300/1161] w-full max-w-[14rem] sm:max-w-[27rem]">
+        <div style={rise(200)} className="rise relative lg:col-span-6">
+          <div className="relative mx-auto aspect-[1300/1161] w-full max-w-[16rem] sm:max-w-[27rem]">
             {/* هالةٌ دافئة خلف الصورة */}
             <div aria-hidden className="absolute inset-[12%] -z-10 rounded-full bg-gradient-to-b from-plum-500/[0.08] via-white/70 to-transparent blur-3xl dark:via-plum-500/10" />
             <img
@@ -165,7 +185,7 @@ export function Hero() {
               width={1300}
               height={1161}
               style={{ maskImage: HERO_MASK, WebkitMaskImage: HERO_MASK }}
-              className="size-full object-contain dark:opacity-30 dark:brightness-90"
+              className="size-full object-contain mix-blend-multiply dark:mix-blend-normal dark:opacity-30 dark:brightness-90"
             />
 
             {FLOATING.map((f, i) => {
@@ -183,7 +203,7 @@ export function Hero() {
                   onMouseLeave={() => setPreview(null)}
                   onFocus={() => !typing && setPreview(q)}
                   onBlur={() => setPreview(null)}
-                  className="flex items-center gap-2 whitespace-nowrap rounded-[0.85rem] border border-white/80 bg-white/45 py-1.5 pe-3 ps-1.5 text-[11.5px] sm:gap-3 sm:rounded-[1.1rem] sm:py-2 sm:pe-4 sm:ps-2 sm:text-[13.5px] font-medium text-ink shadow-[0_12px_36px_-8px_rgba(74,56,86,0.22),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl backdrop-saturate-150 transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white/60 hover:shadow-[0_16px_40px_-8px_rgba(219,110,68,0.3),inset_0_1px_0_rgba(255,255,255,0.95)] lg:pe-5 lg:text-[14px] dark:border-white/15 dark:bg-plum-950/65 dark:text-white dark:backdrop-blur-2xl dark:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)] dark:hover:bg-plum-950/75"
+                  className="neu-raised neu-press flex items-center gap-2 whitespace-nowrap rounded-[0.85rem] py-1.5 pe-3 ps-1.5 text-[11.5px] font-medium text-ink sm:gap-3 sm:rounded-[1.1rem] sm:py-2 sm:pe-4 sm:ps-2 sm:text-[13.5px] lg:pe-5 lg:text-[14px] dark:text-white"
                 >
                   <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-lg sm:size-8 sm:rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 text-white shadow-[0_4px_12px_-2px_rgba(219,110,68,0.5)]">
                     <MessageCircleQuestion className="size-3.5 sm:size-4" strokeWidth={2} />

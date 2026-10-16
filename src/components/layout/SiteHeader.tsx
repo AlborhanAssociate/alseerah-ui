@@ -47,9 +47,8 @@ export function SiteHeader() {
       <header className={cn("fixed inset-x-0 top-0 z-50 px-3 transition-[padding] duration-300 lg:px-5", scrolled ? "pt-2.5" : "pt-3 lg:pt-5")}>
         <div
           className={cn(
-            "mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border border-white/80 bg-white/60 pe-2 ps-4 backdrop-blur-2xl backdrop-saturate-150 transition-[height,box-shadow,background-color] duration-300 dark:border-white/10 dark:bg-paper/60",
-            "shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(74,56,86,0.04)] dark:shadow-none",
-            scrolled ? "h-14 bg-white/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_32px_-12px_rgba(74,56,86,0.22)] dark:bg-paper/80" : "h-16",
+            "neu-raised mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full pe-2 ps-4 transition-[height] duration-300",
+            scrolled ? "h-14" : "h-16",
           )}
         >
           <Link to="/" aria-label="السيرة ai — الصفحة الرئيسيّة" className="shrink-0 transition-opacity hover:opacity-85">

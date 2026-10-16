@@ -1,3 +1,6 @@
+import type { CSSProperties } from "react";
+import { cn } from "@/lib/cn";
+import { CoverRail } from "./CoverRail";
 import { Eye, Feather, LockKeyhole, Quote, ScanSearch, UsersRound } from "lucide-react";
 
 /**
@@ -19,17 +22,32 @@ export function Methodology() {
   return (
     <section id="methodology" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="reveal mx-auto max-w-2xl text-center">
           <h2 className="text-balance text-[1.6rem] font-bold leading-[1.35] text-ink-800 lg:text-[2rem]">مبادئُ لا نحيدُ عنها</h2>
           <p className="mt-3 text-pretty text-[15px] leading-7 text-ink-500">التزامٌ علميٌّ يضبط كلّ إجابةٍ تُخرجها المنصّة.</p>
         </div>
 
         {/* الخطوط الشعريّة بين الخلايا: لونُ الشبكة يظهر من فجواتها (gap-px) وكلّ خليّةٍ بلون الصفحة */}
-        <ul className="mx-auto mt-10 grid max-w-5xl gap-px overflow-hidden rounded-[16px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 dark:border-white/10 dark:bg-white/10">
-          {PRINCIPLES.map((p) => (
-            <li key={p.title} className="group relative bg-paper p-5 transition-colors duration-300 hover:bg-paper-raised sm:p-7 dark:hover:bg-white/[0.03]">
-              {/* شعيرةٌ برتقاليّة تمتدّ على الحافّة العليا عند المرور */}
-              <span aria-hidden className="absolute start-0 top-0 h-px w-0 bg-gold-600 transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
+        {/* الجوّال: شريطٌ دوّار */}
+        <CoverRail
+          label="المبادئ"
+          className="mt-6 sm:hidden"
+          count={PRINCIPLES.length}
+          render={(i, on) => {
+            const p = PRINCIPLES[i];
+            return (
+              <div data-rail className={cn("neu-raised focus-tile rounded-[20px] p-5", on && "in-focus")}>
+                <p.icon className="size-[22px] text-ink-400 dark:text-white/45" strokeWidth={1.4} aria-hidden />
+                <h3 className="mt-4 text-[1.05rem] font-semibold text-ink-800">{p.title}</h3>
+                <p className="mt-1.5 text-pretty text-[13.5px] leading-6 text-ink-500">{p.desc}</p>
+              </div>
+            );
+          }}
+        />
+
+        <ul className="mx-auto mt-10 hidden max-w-5xl gap-5 sm:grid sm:grid-cols-2 sm:gap-6 lg:mt-12 lg:grid-cols-3">
+          {PRINCIPLES.map((p, i) => (
+            <li key={p.title} style={{ "--reveal-delay": `${i * 90}ms` } as CSSProperties} className="neu-raised neu-press neu-emerge focus-tile group rounded-[20px] p-5 sm:p-7">
               {/* رمزٌ خطّيّ رفيع بلا رقعة، فوق العنوان؛ يتلوّن بالبرتقاليّ عند المرور */}
               <p.icon className="size-[22px] text-ink-400 transition-colors duration-300 group-hover:text-gold-600 dark:text-white/45" strokeWidth={1.4} aria-hidden />
               <h3 className="mt-4 text-[1.05rem] font-semibold text-ink-800">{p.title}</h3>

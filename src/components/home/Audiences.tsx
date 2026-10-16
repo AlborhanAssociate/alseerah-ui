@@ -1,3 +1,6 @@
+import type { CSSProperties } from "react";
+import { cn } from "@/lib/cn";
+import { CoverRail } from "./CoverRail";
 import { BookOpenCheck, Landmark, Presentation, SearchCheck } from "lucide-react";
 
 /**
@@ -22,13 +25,30 @@ export function Audiences() {
     <section id="audiences" className="relative scroll-mt-24 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 lg:grid-cols-12 lg:gap-14 lg:px-8">
         {/* النصّ والقائمة؛ حشوةٌ من جهة الصورة تُفسح لطرف الكتاب الخارج من إطارها */}
-        <div className="lg:col-span-7 lg:pe-20">
-          <h2 className="text-balance text-[1.6rem] font-bold leading-[1.35] text-ink-800 lg:text-[2rem]">أداةٌ لأهل العلم والبحث والتعليم</h2>
-          <p className="mt-3 max-w-lg text-pretty text-[15px] leading-7 text-ink-500">صُمّمت لمن يقرأ السيرة ويُدرّسها ويبحث فيها.</p>
+        <div className="min-w-0 lg:col-span-7 lg:pe-20">
+          <h2 className="reveal text-balance text-center text-[1.6rem] font-bold leading-[1.35] text-ink-800 lg:text-start lg:text-[2rem]">أداةٌ لأهل العلم والبحث والتعليم</h2>
+          <p style={{ "--reveal-delay": "80ms" } as CSSProperties} className="reveal mx-auto mt-3 max-w-lg text-pretty text-center lg:mx-0 lg:text-start text-[15px] leading-7 text-ink-500">صُمّمت لمن يقرأ السيرة ويُدرّسها ويبحث فيها.</p>
 
-          <ul className="mt-8 grid gap-px overflow-hidden rounded-[16px] border border-ink/[0.08] bg-ink/[0.08] sm:grid-cols-2 lg:mt-10 dark:border-white/10 dark:bg-white/10">
-            {AUDIENCES.map((a) => (
-              <li key={a.title} className="group bg-paper p-5 transition-colors duration-300 hover:bg-paper-raised sm:p-6 dark:hover:bg-white/[0.03]">
+          {/* الجوّال: شريطٌ دوّار */}
+          <CoverRail
+            label="الفئات"
+            className="mt-4 sm:hidden"
+            count={AUDIENCES.length}
+            render={(i, on) => {
+              const a = AUDIENCES[i];
+              return (
+                <div data-rail className={cn("neu-raised focus-tile rounded-[20px] p-5", on && "in-focus")}>
+                  <a.icon className="size-[22px] text-ink-400 dark:text-white/45" strokeWidth={1.4} aria-hidden />
+                  <h3 className="mt-4 text-[1.02rem] font-semibold leading-7 text-ink-800">{a.title}</h3>
+                  <p className="mt-1 text-pretty text-[13.5px] leading-6 text-ink-500">{a.desc}</p>
+                </div>
+              );
+            }}
+          />
+
+          <ul className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:mt-10">
+            {AUDIENCES.map((a, i) => (
+              <li key={a.title} style={{ "--reveal-delay": `${120 + i * 90}ms` } as CSSProperties} className="neu-raised neu-press neu-emerge focus-tile group rounded-[20px] p-5 sm:p-6">
                 {/* رمزٌ خطّيّ رفيع بلا رقعة، فوق العنوان؛ يتلوّن بالبرتقاليّ عند المرور */}
                 <a.icon className="size-[22px] text-ink-400 transition-colors duration-300 group-hover:text-gold-600 dark:text-white/45" strokeWidth={1.4} aria-hidden />
                 <h3 className="mt-4 text-[1.02rem] font-semibold leading-7 text-ink-800">{a.title}</h3>
@@ -39,7 +59,7 @@ export function Audiences() {
         </div>
 
         {/* الصورة */}
-        <figure className="relative max-lg:order-first lg:col-span-5">
+        <figure style={{ "--reveal-delay": "120ms" } as CSSProperties} className="reveal relative max-lg:order-first max-sm:hidden lg:col-span-5">
           {/* الشاشات الأصغر: صورةٌ عريضة عاديّة */}
           <div className="relative overflow-hidden rounded-[20px] lg:hidden">
             <img src={`${BASE}audience-reader.webp`} alt="قارئٌ يتصفّح كتاباً بين رفوف مكتبة" loading="lazy" width={1400} height={935} className="aspect-[16/10] w-full -scale-x-100 object-cover object-[62%_50%] sm:aspect-[16/9]" />
