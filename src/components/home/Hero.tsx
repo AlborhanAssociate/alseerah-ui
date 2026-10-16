@@ -20,9 +20,9 @@ const HERO_MASK =
 /* بطاقات الأسئلة العائمة فوق الصورة: مواضعُ مادّيّة (left) كي تطابق التصميم في الاتّجاهين، ومدّةُ طفوٍ وتأخيرٌ مختلفان،
    ولكلّ بطاقةٍ أسئلةٌ تتبدّل عليها بالتناوب */
 const FLOATING = [
-  { qs: ["من أوّل من أسلم من الرجال؟", "ما قصّة بناء المسجد النبويّ؟", "من هم السابقون الأوّلون؟"], pos: "-left-[14%] top-[28%]", dur: "6.5s", delay: "0ms" },
-  { qs: ["ما دروس صلح الحديبية؟", "كيف كانت بيعة العقبة؟", "ما أسباب غزوة بدر؟"], pos: "-right-[6%] top-[45%]", dur: "7s", delay: "900ms" },
-  { qs: ["كم دامت الدعوة السرّيّة؟", "متى فُرضت الصلاة؟", "ما قصّة الإسراء والمعراج؟"], pos: "-left-[8%] top-[62%]", dur: "6s", delay: "1600ms" },
+  { qs: ["من أوّل من أسلم من الرجال؟", "ما قصّة بناء المسجد النبويّ؟", "من هم السابقون الأوّلون؟"], pos: "-left-[14%] top-[14%] sm:top-[28%]", dur: "6.5s", delay: "0ms" },
+  { qs: ["ما دروس صلح الحديبية؟", "كيف كانت بيعة العقبة؟", "ما أسباب غزوة بدر؟"], pos: "-right-[6%] top-[42%] sm:top-[45%]", dur: "7s", delay: "900ms" },
+  { qs: ["كم دامت الدعوة السرّيّة؟", "متى فُرضت الصلاة؟", "ما قصّة الإسراء والمعراج؟"], pos: "-left-[8%] top-[70%] sm:top-[62%]", dur: "6s", delay: "1600ms" },
 ] as const;
 
 /* كلّ ١٫٨ ثانية تتبدّل بطاقةٌ واحدة، بالدور، فلا تتغيّر الثلاث معاً */
@@ -153,7 +153,7 @@ export function Hero() {
           </div>
         </div>
 
-        {/* التركيب البصريّ: رجلٌ يسأل من هاتفه وحوله أسئلةٌ عائمة؛ على الجوّال صورةٌ صغيرة فوق النصّ بلا البطاقات */}
+        {/* التركيب البصريّ: رجلٌ يسأل من هاتفه وحوله أسئلةٌ عائمة؛ على الجوّال صورةٌ صغيرة فوق النصّ وبطاقاتٌ أصغر */}
         <div style={rise(200)} className="rise relative max-sm:order-first lg:col-span-6">
           <div className="relative mx-auto aspect-[1300/1161] w-full max-w-[14rem] sm:max-w-[27rem]">
             {/* هالةٌ دافئة خلف الصورة */}
@@ -173,7 +173,7 @@ export function Hero() {
               return (
               <div
                 key={f.pos}
-                className={`float-y absolute hidden sm:block ${f.pos}`}
+                className={`float-y absolute ${f.pos}`}
                 style={{ "--float-dur": f.dur, "--float-delay": f.delay } as CSSProperties}
               >
                 <button
@@ -183,10 +183,10 @@ export function Hero() {
                   onMouseLeave={() => setPreview(null)}
                   onFocus={() => !typing && setPreview(q)}
                   onBlur={() => setPreview(null)}
-                  className="flex items-center gap-3 whitespace-nowrap rounded-[1.1rem] border border-white/80 bg-white/45 py-2 pe-4 ps-2 text-[13.5px] font-medium text-ink shadow-[0_12px_36px_-8px_rgba(74,56,86,0.22),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl backdrop-saturate-150 transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white/60 hover:shadow-[0_16px_40px_-8px_rgba(219,110,68,0.3),inset_0_1px_0_rgba(255,255,255,0.95)] lg:pe-5 lg:text-[14px] dark:border-white/15 dark:bg-plum-950/65 dark:text-white dark:backdrop-blur-2xl dark:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)] dark:hover:bg-plum-950/75"
+                  className="flex items-center gap-2 whitespace-nowrap rounded-[0.85rem] border border-white/80 bg-white/45 py-1.5 pe-3 ps-1.5 text-[11.5px] sm:gap-3 sm:rounded-[1.1rem] sm:py-2 sm:pe-4 sm:ps-2 sm:text-[13.5px] font-medium text-ink shadow-[0_12px_36px_-8px_rgba(74,56,86,0.22),inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl backdrop-saturate-150 transition-[transform,box-shadow,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white/60 hover:shadow-[0_16px_40px_-8px_rgba(219,110,68,0.3),inset_0_1px_0_rgba(255,255,255,0.95)] lg:pe-5 lg:text-[14px] dark:border-white/15 dark:bg-plum-950/65 dark:text-white dark:backdrop-blur-2xl dark:shadow-[0_12px_36px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.08)] dark:hover:bg-plum-950/75"
                 >
-                  <span aria-hidden className="grid size-8 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 text-white shadow-[0_4px_12px_-2px_rgba(219,110,68,0.5)]">
-                    <MessageCircleQuestion className="size-4" strokeWidth={2} />
+                  <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-lg sm:size-8 sm:rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 text-white shadow-[0_4px_12px_-2px_rgba(219,110,68,0.5)]">
+                    <MessageCircleQuestion className="size-3.5 sm:size-4" strokeWidth={2} />
                   </span>
                   {/* المفتاح يتغيّر مع السؤال فيُعاد تشغيل حركة الظهور */}
                   <span key={q} className="swap-in">{q}</span>
