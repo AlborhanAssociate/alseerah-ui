@@ -1,11 +1,7 @@
-# صور مؤقّتة من Unsplash (رخصة Unsplash: استخدام حرّ، يُستحسن ذكر المصوّر)
-- dome.jpg        — https://unsplash.com/photos/1724191078796-8a997b989f43 (القبّة الخضراء)
-- f-isnad.jpg     — https://unsplash.com/photos/1720701575003-51dafcf39cb4 (مخطوطة مذهّبة)
-- f-arabic.jpg    — https://unsplash.com/photos/1720700955600-a21cd215d1a3 (صفحة مخطوطة مزخرفة)
-- f-timeline.jpg  — https://unsplash.com/photos/1510952267577-fc96d5ca660a (قافلة في الصحراء)
+# مصادر الصور المؤقّتة والمقدَّمة من العميل
 
-- f-lessons.jpg   — https://unsplash.com/photos/1616422840391-fa670d4b2ae7 (مصحف مفتوح)
-- f-curricula.jpg — https://unsplash.com/photos/1502700807168-484a3e7889d0 (مكتبة قديمة)
+صور بطاقات المزايا في /classic مسجّلة في public/features/CREDITS.md.
+
 - bg-city.jpg — صورة قدّمها العميل (2151011112.jpg)، مدينة عربيّة قديمة بقبابٍ ونخيل؛ خلفيّة صفحة البينتو تحت طبقةٍ داكنة
 - books.jpg — نسخة مصغّرة من book-lot.jpg (صورة العميل)؛ خلفيّة بطاقة الهويّة
 - features-book.jpg — صورة قدّمها العميل (1964.jpg)، صفحات كتابٍ مفتوح؛ بطاقة «رفيقٌ علميّ»
