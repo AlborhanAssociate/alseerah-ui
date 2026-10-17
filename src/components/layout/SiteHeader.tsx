@@ -51,7 +51,7 @@ export function SiteHeader() {
             scrolled ? "h-14" : "h-16",
           )}
         >
-          <Link to="/" aria-label="السيرة ai — الصفحة الرئيسيّة" className="shrink-0 transition-opacity hover:opacity-85">
+          <Link to="/modern" aria-label="السيرة ai — الصفحة الرئيسيّة" className="shrink-0 transition-opacity hover:opacity-85">
             <Logo className="h-9" />
           </Link>
 

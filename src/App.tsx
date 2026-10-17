@@ -17,10 +17,11 @@ export default function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToHash />
       <Routes>
-        <Route path="/" element={<LandingOnePage />} />
-        {/* الهبوط السابق ذو الأقسام، محفوظٌ على مسارٍ جانبيّ */}
-        <Route path="/classic" element={<LandingPage />} />
-        <Route path="/bento" element={<Navigate to="/" replace />} />
+        {/* واجهتا الهبوط: البينتو والحديثة ذات الأقسام. الجذر يفتح البينتو، والرابط القديم /classic يُحوَّل إلى الحديثة */}
+        <Route path="/bento" element={<LandingOnePage />} />
+        <Route path="/modern" element={<LandingPage />} />
+        <Route path="/" element={<Navigate to="/bento" replace />} />
+        <Route path="/classic" element={<Navigate to="/modern" replace />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/privacy" element={<LegalPage />} />
         <Route path="/terms" element={<LegalPage />} />
